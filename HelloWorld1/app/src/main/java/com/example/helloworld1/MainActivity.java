@@ -1,18 +1,12 @@
 package com.example.helloworld1;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,23 +16,28 @@ import android.widget.TextView;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.Toast;
-
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import java.util.Hashtable;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
-
+    int PERMISSION_ID = 44;
+    FusedLocationProviderClient mFusedLocationClient;
+    TextView latTextView, lonTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         final TextView textView =  findViewById(R.id.text_view_id);
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         itemsDetails.put("Pen", "A blue pen");
         itemsDetails.put("Laptop", "Asus zenbook");
         itemsDetails.put("Stickers", "12 stickers with Snow White");
+
 
 
 
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         SetSettingsButton();
         SetSaveButton();
         SetReadButton();
+        SetSensorsButton();
 
     }
     protected void SetSettingsButton(){
@@ -90,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(mainActivity, MySettingsActivity.class));
+            }
+        });
+    }
+    protected void SetSensorsButton(){
+        final MainActivity mainActivity = this;
+        Button button = findViewById(R.id.sensors_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(mainActivity, SensorsActivity.class));
             }
         });
     }
